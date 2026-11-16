@@ -1,0 +1,16 @@
+{
+  "$schema": "../../../schemas/tool-schemas/tool.json",
+  "tool_id": "orgo",
+  "toolkit_id": "computer_use",
+  "name": "Orgo",
+  "version": "1.0.0",
+  "description": "Control Orgo cloud computers (Linux, Windows, macOS): run shell commands, take screenshots, click and type. Connected through Orgo's hosted MCP server.",
+  "author": {
+    "name": "Nichalas",
+    "github": "pixeldreamkid"
+  },
+  "distribution": "extension",
+  "maintenance": "community",
+  "source": { "type": "mcp", "transport": "http", "url": "https://www.orgo.ai/mcp" },
+  "functions": {}
+}

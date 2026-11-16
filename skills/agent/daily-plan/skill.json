@@ -1,0 +1,11 @@
+{
+  "$schema": "../../../schemas/skill-schemas/agent-skill.json",
+  "format": "agent-skill",
+  "author": {
+    "name": "Nichalas",
+    "github": "pixeldreamkid"
+  },
+  "distribution": "extension",
+  "maintenance": "community",
+  "version": "1.0.0"
+}

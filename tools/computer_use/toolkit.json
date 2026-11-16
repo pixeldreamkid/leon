@@ -12,6 +12,7 @@
     "LOCAL_INVENTORY.md"
   ],
   "tools": [
-    "cua"
+    "cua",
+    "orgo"
   ]
 }
