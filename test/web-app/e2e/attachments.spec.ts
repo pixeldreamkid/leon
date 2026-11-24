@@ -9,7 +9,7 @@ const IMAGE = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQ
 const TEXT = { name: 'Notes.txt', mimeType: 'text/plain', buffer: Buffer.from('A quiet afternoon.') }
 
 async function pasteFiles(page: Page, files: { name: string, type: string, size?: number }[]): Promise<void> {
-  await page.getByRole('textbox', { name: 'Message Leon' }).evaluate((element, entries) => {
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).evaluate((element, entries) => {
     const clipboard = new DataTransfer()
     for (const entry of entries) {
       const file = new File(['notes'], entry.name, { type: entry.type })
@@ -78,7 +78,7 @@ for (const theme of ['light', 'dark']) {
     const chooser = await chooserPromise
     expect(chooser.isMultiple()).toBe(true)
     await chooser.setFiles([{ name: 'Photo.png', mimeType: 'image/png', buffer: IMAGE }, TEXT])
-    const files = page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })
+    const files = page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })
     await expect(files.getByRole('listitem')).toHaveCount(2)
     await expect(files.getByRole('link', { name: 'Open', exact: true })).toHaveCount(0)
     await expect(files.getByRole('link')).toHaveCount(0)
@@ -90,21 +90,21 @@ for (const theme of ['light', 'dark']) {
     const badge = files.getByRole('listitem').first().locator('.aurora-artifact-icon')
     await expect(badge).toBeVisible()
     await expect(files.getByRole('img', { name: 'Photo.png' })).toBeVisible()
-    await finishFiniteAnimations(page.getByRole('form', { name: 'Send a message to Leon' }))
+    await finishFiniteAnimations(page.getByRole('form', { name: 'Send a message to DataTalk' }))
     const geometry = await files.getByRole('listitem').first().boundingBox()
     expect(geometry!.width).toBe(geometry!.height)
     expect(geometry!.width).toBe(128)
     const badgeBounds = await badge.boundingBox()
     expect(badgeBounds!.x - geometry!.x).toBeLessThan(16)
     expect(geometry!.y + geometry!.height - badgeBounds!.y - badgeBounds!.height).toBeLessThan(16)
-    const field = await page.getByRole('textbox', { name: 'Message Leon' }).boundingBox()
+    const field = await page.getByRole('textbox', { name: 'Message DataTalk' }).boundingBox()
     expect(field!.y).toBeGreaterThanOrEqual(geometry!.y + geometry!.height)
     await page.screenshot({ path: testInfo.outputPath(`attachments-${theme}.png`) })
     await files.getByRole('button', { name: 'Enlarge Photo.png', exact: true }).click()
     await expect(page.getByRole('dialog', { name: 'Photo.png', exact: true })).toBeVisible()
     await page.getByRole('button', { name: 'Zoom out', exact: true }).click()
     await expect(page.getByRole('dialog', { name: 'Photo.png', exact: true })).toHaveCount(0)
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     await composer.fill('Read these files.')
     const delivered = page.waitForRequest((request) => request.url().endsWith('/messages') && request.method() === 'POST')
     await composer.press('Enter')
@@ -160,7 +160,7 @@ test('selects, pastes and drops source and configuration files as text previews'
     { name: 'Page.html', mimeType: 'text/html', text: '<script>globalThis.attachmentExecuted = true</script>' }
   ]
   await chooser.setFiles(sources.map(({ text, ...file }) => ({ ...file, buffer: Buffer.from(text) })))
-  const files = page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })
+  const files = page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })
   for (const file of sources) {
     const preview = files.getByRole('figure', { name: file.name, exact: true })
     await expect(preview).toBeVisible()
@@ -219,7 +219,7 @@ test('uploads selected disk files without exposing their source paths', async ({
     path.join(directory, 'Notes.txt'), path.join(directory, 'Nested', 'Notes.txt')
   ])
   await expect(page.getByRole('list', { name: 'Attached files' }).getByRole('listitem')).toHaveCount(2)
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   expect(ui.uploads).toHaveLength(0)
   // Disk-backed browser files are sent to the real HTTP sink: DevTools does not
   // expose their body bytes to Playwright's intercepted-request fixtures.
@@ -245,7 +245,7 @@ test('uploads selected disk files without exposing their source paths', async ({
     expect((await page.request.post(`/__ui/uploads/${id}/complete`)).status()).toBe(204)
   }
   expect(sizes.sort((a, b) => a - b)).toEqual([12, 15])
-  await expect(page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
+  await expect(page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
 })
 
 test('drains folder pages and subfolders, reports skipped files once and respects the remaining attachment slots', async ({ page, ui }) => {
@@ -274,7 +274,7 @@ test('bounds folder traversal and discards pending reads when leaving the sessio
   const delayed = await folderTransfer(page, { files: 1, delayed: true })
   await main.dispatchEvent('drop', { dataTransfer: delayed })
   await expect(page.getByRole('status').filter({ hasText: 'I’m reading the folder' })).toBeVisible()
-  await page.getByRole('textbox', { name: 'Message Leon' }).fill('Keep drafting while reading')
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).fill('Keep drafting while reading')
   await expect(page.getByRole('button', { name: 'Send message', exact: true })).toBeDisabled()
   await page.getByRole('link', { name: 'New session', exact: true }).click()
   await page.evaluate(() => Reflect.get(window, 'finishFolderRead')())
@@ -302,7 +302,7 @@ test('pastes files without interrupting text input and can remove and reselect a
     }
   })
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Keep this text')
   await pasteFiles(page, [{ name: 'Notes.txt', type: 'text/plain' }])
   await expect(composer).toHaveValue('Keep this text')
@@ -333,7 +333,7 @@ test('shows a stable drop zone throughout the main body and excludes the sidebar
   await main.dispatchEvent('dragenter', { dataTransfer: data })
   const zone = page.getByRole('status').filter({ hasText: 'Drop files to attach' })
   await expect(zone).toBeVisible()
-  const nested = page.getByRole('textbox', { name: 'Message Leon' })
+  const nested = page.getByRole('textbox', { name: 'Message DataTalk' })
   await nested.dispatchEvent('dragenter', { dataTransfer: data })
   await nested.dispatchEvent('dragleave', { dataTransfer: data })
   await expect(zone).toBeVisible()
@@ -439,7 +439,7 @@ test('bounds attachments at twenty and rejects unsafe filenames, mismatched type
 test('retains the draft on upload failure and reuses uploaded receipts and message identity on retry', async ({ page, ui }) => {
   await page.goto(SESSION_URL)
   await page.getByLabel('Choose attachments', { exact: true }).setInputFiles(TEXT)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Read my notes.')
   ui.failure = { path: `/api/v1/sessions/${ui.sessions[0]!.id}/messages`, status: 503, message: 'Please retry.' }
   const first = page.waitForRequest((request) => request.url().endsWith('/messages'))
@@ -466,10 +466,10 @@ test('marks a failed upload per file and retries without uploading completed fil
     }
     await route.fallback()
   })
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Read these notes.')
   await composer.press('Enter')
-  const files = page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })
+  const files = page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })
   await expect(files.getByText('Upload failed', { exact: true })).toBeVisible()
   await expect(files.getByText('Uploaded', { exact: true })).toBeVisible()
   await expect(composer).toHaveValue('Read these notes.')
@@ -510,7 +510,7 @@ test('retries an upload with the same identity after its acknowledgement is lost
   await page.getByRole('button', { name: 'Send message', exact: true }).click()
   await expect(page.getByText('Upload failed', { exact: true })).toBeVisible()
   await page.getByRole('button', { name: 'Retry sending message', exact: true }).click()
-  await expect(page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
+  await expect(page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
   expect(attempts).toBe(2)
   expect(references).toEqual([stored!.id])
 })
@@ -528,7 +528,7 @@ test('releases uploaded File objects after sending while the composer stays moun
   await page.goto(SESSION_URL)
   await page.getByLabel('Choose attachments', { exact: true }).setInputFiles(TEXT)
   await page.getByRole('button', { name: 'Send message', exact: true }).click()
-  await expect(page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
+  await expect(page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
   expect(ui.uploads).toHaveLength(1)
   const memory = await page.context().newCDPSession(page)
   try {
@@ -590,7 +590,7 @@ for (const change of ['session', 'profile'] as const) {
       }
       expect((await cancelled).failure()?.errorText).toContain('ERR_ABORTED')
       await expect(page.getByRole('list', { name: 'Attached files' })).toHaveCount(0)
-      await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeVisible()
+      await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeVisible()
       expect(attempts).toBe(1)
       expect(commands).toBe(0)
     } finally {
@@ -616,9 +616,9 @@ for (const landing of ['session', 'new'] as const) {
       await page.getByRole('link', { name: 'Test session 1', exact: true }).click()
       await expect(page).toHaveURL(/session\/00000000-0000-4000-8000-000000000001$/)
       await context.setOffline(false)
-      await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeVisible()
+      await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeVisible()
       await page.getByRole('link', { name: 'Test session 0', exact: true }).click()
-      await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeVisible()
+      await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeVisible()
       expect(ui.uploads).toHaveLength(0)
       expect(ui.sessions).toHaveLength(3)
       expect(ui.requests.filter((url) => url.pathname.endsWith('/attachments'))).toHaveLength(0)
@@ -670,7 +670,7 @@ test('renews the idle deadline only for advancing upload bytes and keeps a stall
   expect(ui.uploads).toHaveLength(0)
   await page.evaluate(() => Reflect.get(window, 'restoreUploadTransport')())
   await page.getByRole('button', { name: 'Retry sending message', exact: true }).click()
-  await expect(page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
+  await expect(page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
   expect(ui.uploads).toHaveLength(1)
 })
 
@@ -699,7 +699,7 @@ test('times out missing server acceptance after transfer and allows a successful
   await page.getByRole('button', { name: 'Retry sending message', exact: true }).click()
   await expect.poll(async () => (await (await page.request.get(`/__ui/uploads/${ids[1]}`)).json()).ready).toBe(true)
   expect((await page.request.post(`/__ui/uploads/${ids[1]}/complete`)).status()).toBe(204)
-  await expect(page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
+  await expect(page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
   await page.clock.fastForward(180_000)
   await expect(page.getByText('Upload failed', { exact: true })).toHaveCount(0)
   expect(attempts).toBe(2)
@@ -750,7 +750,7 @@ test('measures per-file progress over a slow connection and waits for server acc
     await expect(page.getByText('Processing', { exact: true })).toBeVisible()
     await expect.poll(async () => (await (await page.request.get(`/__ui/uploads/${ids[1]}`)).json()).ready).toBe(true)
     expect((await page.request.post(`/__ui/uploads/${ids[1]}/complete`)).status()).toBe(204)
-    await expect(page.getByRole('form', { name: 'Send a message to Leon' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
+    await expect(page.getByRole('form', { name: 'Send a message to DataTalk' }).getByRole('list', { name: 'Attached files' })).toHaveCount(0)
     expect(commands).toBe(1)
     await expect(first).toHaveCount(0)
   } finally {
@@ -762,7 +762,7 @@ test('measures per-file progress over a slow connection and waits for server acc
 for (const query of ['', 'Read my notes.']) {
   test(`creates a session before uploading and clears the submitted draft (query: ${Boolean(query)})`, async ({ page, ui }) => {
     await page.goto('./')
-    await page.getByRole('textbox', { name: 'Message Leon' }).fill(query)
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).fill(query)
     await page.getByLabel('Choose attachments', { exact: true }).setInputFiles(TEXT)
     await page.getByRole('button', { name: 'Send message', exact: true }).click()
     await expect(page).toHaveURL(/session\//)
@@ -770,7 +770,7 @@ for (const query of ['', 'Read my notes.']) {
     expect(ui.uploads[0]!.session_id).toBe(ui.sessions.at(-1)!.id)
     await expect(page.getByRole('list', { name: 'Attached files' }).getByRole('listitem')).toHaveCount(1)
     await page.getByRole('navigation', { name: 'Main menu' }).getByRole('link', { name: 'New session', exact: true }).click()
-    await expect(page.getByRole('textbox', { name: 'Message Leon' })).toHaveValue('')
+    await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toHaveValue('')
     await expect(page.getByRole('list', { name: 'Attached files' })).toHaveCount(0)
   })
 }

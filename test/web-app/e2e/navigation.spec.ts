@@ -11,7 +11,7 @@ test('warms session intent and search code without navigating, consuming state, 
   const resources: string[] = []
   page.on('request', (request) => resources.push(request.url()))
   await page.goto('./')
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   expect(resources.some((url) => /search-sessions-dialog-|rare-icon-morphs-|weather-layer-/.test(url))).toBe(false)
   await page.getByRole('button', { name: 'Search sessions', exact: true }).hover()
   await expect.poll(() => resources.some((url) => url.includes('search-sessions-dialog-'))).toBe(true)
@@ -23,7 +23,7 @@ test('warms session intent and search code without navigating, consuming state, 
   await expect(page).not.toHaveURL(new RegExp(OTHER_SESSION_ID))
   await link.click()
   await expect(page).toHaveURL(new RegExp(OTHER_SESSION_ID))
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   expect(ui.historyRequests.filter((url) => url.pathname.endsWith(OTHER_SESSION_ID))).toHaveLength(1)
 })
 
@@ -55,7 +55,7 @@ test('warms Markdown alongside submission before session creation returns', asyn
   try {
     await page.goto('./')
     expect(resources.some((url) => url.includes('markdown-vendor-'))).toBe(false)
-    await page.getByRole('textbox', { name: 'Message Leon' }).fill('Make room for a small idea')
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).fill('Make room for a small idea')
     await page.getByRole('button', { name: 'Send message', exact: true }).click()
     await expect.poll(() => resources.some((url) => url.includes('markdown-vendor-'))).toBe(true)
     expect(ui.historyRequests).toHaveLength(0)
@@ -75,7 +75,7 @@ test('keeps the sidebar usable and reports an explicitly requested search downlo
   await expect(page.getByText('Could not load search', { exact: true })).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(dialog).toHaveCount(0)
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeVisible()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeVisible()
 })
 
 for (const reducedMotion of ['no-preference', 'reduce'] as const) {
@@ -350,7 +350,7 @@ test('reveals conversation loading only after one second and cancels it on navig
   const release = ui.holdHistory()
   await page.goto(SESSION_URL)
   const loading = page.getByText('Loading conversation…', { exact: true })
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeVisible()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeVisible()
   await expect(loading).toHaveCount(0)
   await page.clock.runFor(999)
   await expect(loading).toHaveCount(0)
@@ -370,7 +370,7 @@ test('bounds inline output, virtualizes complete logs, and retains the inspector
   const resources: string[] = []
   page.on('request', (request) => resources.push(request.url()))
   await page.goto('/web-app/')
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   expect(resources.some((url) => /\/assets\/(markdown-|tool-diff-|highlights-)/.test(url))).toBe(false)
   const answer = ui.history.get(SESSION_ID)!.at(-1)!
   const tool: ConversationTool = { id: 'large-log', name: 'test.shell.run', toolCallTitle: 'Inspect the logs',
@@ -532,7 +532,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await page.getByRole('button', { name: 'Worked for 2s', exact: true }).click()
     await page.getByRole('button', { name: 'Used 16 tools', exact: true }).click()
     await page.getByRole('button', { name: 'Inspect section 0', exact: true }).click()
-    const tools = page.getByRole('region', { name: 'Leon’s tool usage', exact: true })
+    const tools = page.getByRole('region', { name: 'DataTalk’s tool usage', exact: true })
     const firstOutput = tools.getByRole('region', { name: 'Tool output', exact: true }).first()
     const main = page.locator('.app-main')
 
@@ -946,7 +946,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await search.press('Enter')
     await expect(page).toHaveURL(new RegExp(OTHER_SESSION_ID))
     await expect(dialog).toBeHidden()
-    await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+    await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   })
 }
 
@@ -1040,7 +1040,7 @@ for (const { theme, reducedMotion, width } of [
     await expect(input).toBeFocused()
     await input.press('Enter')
     await expect(page).toHaveURL(new RegExp(contentMatches.at(-1)!.id))
-    await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+    await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   })
 }
 
@@ -1069,7 +1069,7 @@ test('moves sidebar focus across virtual rows without opening a session until En
   await expect(second).toBeFocused()
   await second.press('Enter')
   await expect(page).toHaveURL(new RegExp(OTHER_SESSION_ID))
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
 })
 
 test('opens and navigates session action menus with arrows, boundaries and native activation', async ({ page, ui }) => {
@@ -1167,7 +1167,7 @@ for (const colorScheme of ['light', 'dark'] as const) {
 test('reveals active session options on hover or keyboard focus rather than selection', async ({ page, ui }) => {
   void ui
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   const row = page.getByRole('listitem').filter({ has: page.getByRole('link', { name: 'Test session 0', exact: true }) })
   const link = row.getByRole('link')
   const actions = row.locator('.session-list-item-actions')
@@ -1200,7 +1200,7 @@ for (const pinned of [false, true]) {
     ui.sessions[1]!.status = 'wip' as typeof ui.sessions[1]['status']
     ui.sessions[1]!.isPinned = pinned
     await page.goto(SESSION_URL)
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     const otherLink = page.getByRole('link', { name: /Test session 1/ })
     const row = page.getByRole('listitem').filter({ has: otherLink })
     const dot = row.locator('.session-list-item-unread-dot')
@@ -1306,7 +1306,7 @@ test('distinguishes the selected session from concurrent WIP rows in both themes
   await page.goto(SESSION_URL)
   const selected = page.getByRole('link', { name: /Test session 0/ })
   const other = page.getByRole('link', { name: /Test session 1/ })
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   for (const theme of ['light', 'dark']) {
     await page.getByRole('button', { name: `Apply ${theme} theme`, exact: true }).click()
     await expect(page.locator('html')).not.toHaveAttribute('data-theme-transition')
@@ -1340,7 +1340,7 @@ test('distinguishes the selected session from concurrent WIP rows in both themes
 test('drafts immediately while history loads and opens the latest messages at the bottom', async ({ page, ui }, testInfo) => {
   const release = ui.holdHistory()
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   await expect(page.getByText('Loading conversation…', { exact: true })).toHaveCount(0)
   await composer.fill('Draft before loading')
@@ -1386,7 +1386,7 @@ test('reselects the current session at the bottom without discarding its draft',
   void ui
   await page.goto(SESSION_URL)
   await expectBottom(page)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Keep this draft')
   await page.locator('.app-main').evaluate((main) => main.scrollTo({ top: main.scrollTop - 500 }))
   await page.getByRole('link', { name: 'Test session 0', exact: true }).click()
@@ -1456,7 +1456,7 @@ for (const { theme, motion, width } of [
     const ownerActions = page.getByRole('group', { name: 'Owner message actions', exact: true })
     const answer = page.locator('.final-answer')
     const answerActions = answer.getByRole('group', { name: 'Answer actions', exact: true })
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(ownerActions).toHaveCSS('opacity', '0')
     await expect(answerActions).toHaveCSS('opacity', '0')
     for (const actions of [ownerActions, answerActions]) {
@@ -1482,7 +1482,7 @@ for (const { theme, motion, width } of [
           verticallyCentered: Math.abs(dateCenter - buttonCenter) < 0.5
         }
       })).toEqual({ sameColor: true, mediumSize: true, mediumLineHeight: true, verticallyCentered: true })
-      await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+      await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
       await expect(actions).toHaveCSS('opacity', '0')
     }
     const position = await owner.boundingBox()
@@ -1611,7 +1611,7 @@ test.describe('touch message actions', () => {
     await answerActions.getByRole('button', { name: 'Turn info', exact: true }).tap()
     const dialog = page.getByRole('dialog', { name: 'Turn info', exact: true })
     await expect(dialog).toBeVisible()
-    await page.getByRole('textbox', { name: 'Message Leon' }).tap()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).tap()
     await expect(dialog).toHaveCount(0)
     await expect(answerActions).toHaveCSS('opacity', '1')
   })
@@ -1625,12 +1625,12 @@ test('centers general errors in the usable feed area on session and new-session 
     } else {
       await page.getByRole('link', { name: 'New session', exact: true }).click()
     }
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     const alert = page.getByRole('alert')
     await expect(alert).toBeVisible()
     for (const draft of ['', 'A restored draft\nwith several lines\nand more room to type.']) {
       await composer.fill(draft)
-      await page.getByRole('form', { name: 'Send a message to Leon' }).evaluate(async (element) => {
+      await page.getByRole('form', { name: 'Send a message to DataTalk' }).evaluate(async (element) => {
         await Promise.allSettled(element.getAnimations({ subtree: true })
           .filter((animation) => animation.effect?.getComputedTiming().iterations !== Infinity)
           .map((animation) => animation.finished))
@@ -1667,7 +1667,7 @@ test('updates session titles from metadata-only notifications during and after a
   await expectBottom(page)
   await expect(page.getByRole('link', { name: 'Test session 0', exact: true })
     .locator('.streaming-text-character-new')).toHaveCount(0)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Keep this draft while the title changes')
   await ui.emit([{
     type: 'turn_status', sequence: 1, session_id: SESSION_ID, turn_id: 'turn', response_id: null,
@@ -1741,7 +1741,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     } else {
       await expect(viewport).toHaveClass(/session-list-item-title-scrolling/)
     }
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(viewport).not.toHaveClass(/session-list-item-title-scrolling/)
     await expect.poll(() => link.locator('.session-list-item-title-text')
       .evaluate((element) => element.getAnimations().length)).toBe(0)
@@ -1823,7 +1823,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     })
     await page.emulateMedia({ reducedMotion })
     await page.goto(SESSION_URL)
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     const first = page.getByRole('link', { name: 'Test session 0', exact: true })
     const other = page.getByRole('link', { name: 'Test session 1', exact: true })
     const newSession = page.getByRole('link', { name: 'New session', exact: true })
@@ -1847,7 +1847,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
       return Reflect.get(window, 'draftGeometryTransitions') as string[]
     })).not.toContain(draft)
     if (reducedMotion === 'no-preference') {
-      await expect(page.getByRole('form', { name: 'Send a message to Leon' })).toHaveCSS('transition-property', 'height')
+      await expect(page.getByRole('form', { name: 'Send a message to DataTalk' })).toHaveCSS('transition-property', 'height')
     }
     await composer.press('ArrowUp')
     await expect(composer).toHaveValue(draft)
@@ -1875,7 +1875,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     ui.history.get(SESSION_ID)!.at(-1)!.message = text
     await page.emulateMedia({ reducedMotion })
     const expectSavedAnswer = async (): Promise<void> => {
-      const answer = page.getByRole('region', { name: 'Leon’s final answer' })
+      const answer = page.getByRole('region', { name: 'DataTalk’s final answer' })
         .filter({ hasText: lines.at(-1)! })
       await expect(answer.locator('p')).toHaveText(lines)
       await expect(answer.locator('p').last()).toHaveCSS('white-space', 'pre-wrap')
@@ -1884,7 +1884,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
         Math.abs(main.scrollHeight - main.clientHeight - main.scrollTop)
       )).toBeLessThanOrEqual(2)
       await expect(answer.locator('.streaming-text-character-new')).toHaveCount(0)
-      await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+      await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
     }
 
     await page.goto(SESSION_URL)
@@ -1917,7 +1917,7 @@ test('saves drafts only when leaving and removes submitted or manually cleared t
     }
   })
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   const first = page.getByRole('link', { name: 'Test session 0', exact: true })
   const other = page.getByRole('link', { name: 'Test session 1', exact: true })
   const writes = (): Promise<number> => page.evaluate(() => Reflect.get(window, 'draftStorageWriteCount') as number)
@@ -1947,7 +1947,7 @@ test('saves drafts only when leaving and removes submitted or manually cleared t
 
 test('isolates profile drafts and prioritizes new typing while authentication resolves', async ({ page, ui }) => {
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(page.getByRole('button', { name: 'Send message' })).toBeDisabled()
   await composer.fill('First profile draft')
   await expect(page.getByRole('button', { name: 'Send message' })).toBeEnabled()
@@ -1992,7 +1992,7 @@ test('keeps drafting usable and reports browser storage failures', async ({ page
     }
   })
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Keep this text available')
   await expect(page.getByRole('button', { name: 'Send message' })).toBeEnabled()
   await page.evaluate(() => window.dispatchEvent(new PageTransitionEvent('pagehide')))
@@ -2079,13 +2079,13 @@ test('keeps older history readable after a paging failure and retries only on re
   await expect(page.getByText('Saved question 220', { exact: true })).toBeVisible()
   await expect(page.locator('.toast-title')).toHaveText(['Could not load the conversation'])
   const requests = ui.requests.filter((url) => url.searchParams.has('before')).length
-  await page.getByRole('textbox', { name: 'Message Leon' }).fill('Keep this draft')
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).fill('Keep this draft')
   await expect(retry).toBeEnabled()
   expect(ui.requests.filter((url) => url.searchParams.has('before'))).toHaveLength(requests)
   ui.failure = undefined
   await retry.click()
   await expect(retry).toHaveCount(0)
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toHaveValue('Keep this draft')
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toHaveValue('Keep this draft')
 })
 
 for (const shortWindow of [false, true]) {
@@ -2124,7 +2124,7 @@ for (const shortWindow of [false, true]) {
 test('reports a shared history failure once and keeps the draft through manual recovery', async ({ page, ui }) => {
   ui.failure = { path: `/api/v1/sessions/${SESSION_ID}`, status: 500, message: 'History is unavailable.' }
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Keep this during recovery')
   await expect(page.locator('.toast-title')).toHaveText(['Could not load the conversation'])
   ui.failure = undefined
@@ -2153,7 +2153,7 @@ test('gives network-specific feedback and keeps drafting available through offli
     }
   })
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('A draft during an outage')
   const notice = page.getByRole('alert')
   await expect(notice).toContainText('I couldn’t reach the server. Check your network connection and try again.')
@@ -2196,7 +2196,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
       answerStartedAt: startedAt + 2_000, metrics: { durationMs: 3_000 }
     }
     await page.goto(SESSION_URL)
-    const work = page.getByRole('region', { name: 'Leon’s completed work', exact: true })
+    const work = page.getByRole('region', { name: 'DataTalk’s completed work', exact: true })
     await work.getByRole('button', { name: 'Worked for 3s', exact: true }).click()
     await work.getByRole('button', { name: 'Used 1 tool for 618ms', exact: true }).click()
     const tool = work.getByRole('button', { name: 'Look up details' })
@@ -2204,8 +2204,8 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     const badge = timestamp.locator('..')
     const tooltip = page.getByRole('tooltip')
     await expect(timestamp).toHaveText('Yesterday, 14:32')
-    await page.getByRole('textbox', { name: 'Message Leon' }).focus()
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).focus()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(badge).toHaveCSS('opacity', '0')
     const reservedWidth = (await badge.boundingBox())!.width
     expect(reservedWidth).toBeGreaterThan(0)
@@ -2247,7 +2247,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await expect(tooltip).toHaveText('2026-10-30 14:32:15')
     const bounds = await tooltip.boundingBox()
     expect(bounds!.y).toBeGreaterThanOrEqual(0)
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(badge).toHaveCSS('opacity', '0')
     await expect(tooltip).toHaveCount(0)
     await tool.focus()
@@ -2257,8 +2257,8 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await expect(tool).toBeFocused()
     await expect(tool).toHaveAttribute('aria-expanded', 'true')
     await expect(tooltip).toHaveCount(0)
-    await page.getByRole('textbox', { name: 'Message Leon' }).focus()
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).focus()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(badge).toHaveCSS('opacity', '1')
     await timestamp.focus()
     await expect(tooltip).toHaveText('2026-10-30 14:32:15')
@@ -2268,11 +2268,11 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await expect(tool).toHaveAttribute('aria-expanded', 'false')
     await timestamp.click()
     await expect(tool).toHaveAttribute('aria-expanded', 'true')
-    const thought = work.getByRole('region', { name: 'Leon’s thinking', exact: true })
+    const thought = work.getByRole('region', { name: 'DataTalk’s thinking', exact: true })
     await thought.getByRole('button').locator('.activity-wave-content .process-group-title').click()
     await expect(thought.locator('.thinking-message-details')).toBeVisible()
-    await page.getByRole('textbox', { name: 'Message Leon' }).focus()
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).focus()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(thought.locator('.process-group-heading > .activity-timestamp')).toHaveCSS('opacity', '1')
     expect(await thought.evaluate((element) => {
       const details = element.querySelector('.thinking-message-details')!.getBoundingClientRect()
@@ -2285,9 +2285,9 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     expect(thoughtDate.x + thoughtDate.width).toBeLessThanOrEqual(thoughtChevron.x)
     await thought.locator('.activity-timestamp time').hover()
     await expect(tooltip).toContainText('2026-10-30 14:32:15')
-    await page.getByRole('textbox', { name: 'Message Leon' }).hover()
+    await page.getByRole('textbox', { name: 'Message DataTalk' }).hover()
     await expect(tooltip).toHaveCount(0)
-    await page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+    await page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
       .locator('.streaming-text-characters').hover()
     await expect(tooltip).toHaveCount(0)
     await expect(page.locator('.final-answer').last()
@@ -2386,9 +2386,9 @@ test('reports a rejected session action once without confirming success', async 
 test('cancels obsolete history silently when switching sessions', async ({ page, ui }) => {
   const release = ui.holdHistory()
   await page.goto(SESSION_URL)
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   await page.getByRole('link', { name: 'Test session 1', exact: true }).click()
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   await composer.fill('Only the active session')
   release()
@@ -2400,7 +2400,7 @@ test('cancels obsolete history silently when switching sessions', async ({ page,
 
 test('retries failed delivery with the original message ID instead of duplicating it', async ({ page, ui }) => {
   await page.goto(`session/${OTHER_SESSION_ID}`)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Retry delivery')
   await expect(page.getByRole('button', { name: 'Send message' })).toBeEnabled()
   ui.failure = { path: `/api/v1/sessions/${OTHER_SESSION_ID}/messages`, status: 500, message: 'Delivery failed.' }
@@ -2474,7 +2474,7 @@ test('preserves sub-second tool totals in milliseconds after reloading', async (
   }
 
   await page.goto(SESSION_URL)
-  const work = page.getByRole('region', { name: 'Leon’s completed work' })
+  const work = page.getByRole('region', { name: 'DataTalk’s completed work' })
   await work.getByRole('button', { name: 'Worked for 400ms', exact: true }).click()
   await expect(work.getByRole('button', { name: 'Used 2 tools for 210ms', exact: true })).toBeVisible()
   await page.reload()
@@ -2530,12 +2530,12 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     }
     await page.emulateMedia({ reducedMotion })
     await page.goto(SESSION_URL)
-    const work = page.getByRole('region', { name: 'Leon’s completed work' })
+    const work = page.getByRole('region', { name: 'DataTalk’s completed work' })
     await work.getByRole('button', { name: 'Worked for 20s', exact: true }).click()
     await work.getByRole('button', { name: 'Used 2 tools for 1s', exact: true }).click()
     await expect(work.locator('.tool-call-duration')).toHaveText(['618ms', '435ms'])
-    const generation = work.getByRole('region', { name: 'Leon’s answer generation' })
-    const review = work.getByRole('region', { name: 'Leon’s review' })
+    const generation = work.getByRole('region', { name: 'DataTalk’s answer generation' })
+    const review = work.getByRole('region', { name: 'DataTalk’s review' })
     await expect(generation).toHaveText('Generated answer in 5s')
     await expect(review).toHaveText('Reviewed for 3s')
     await expect(generation.locator('[data-icon="pencil-ai"]')).toHaveCount(1)
@@ -2562,8 +2562,8 @@ test('omits absent or unmeasured phases instead of estimating their duration', a
   await page.goto(SESSION_URL)
   await page.getByRole('button', { name: 'Worked for 4s', exact: true }).click()
   await expect(page.getByRole('button', { name: 'Thought', exact: true })).toBeVisible()
-  await expect(page.getByRole('region', { name: 'Leon’s review' })).toHaveCount(0)
-  await expect(page.getByRole('region', { name: 'Leon’s answer generation' })).toHaveCount(0)
+  await expect(page.getByRole('region', { name: 'DataTalk’s review' })).toHaveCount(0)
+  await expect(page.getByRole('region', { name: 'DataTalk’s answer generation' })).toHaveCount(0)
 })
 
 test('shows structured plans without duplicate legacy widget answers while retaining other widget content', async ({ page, ui }) => {
@@ -2592,7 +2592,7 @@ test('shows structured plans without duplicate legacy widget answers while retai
     if (reload) {
       await page.reload()
     }
-    const answers = page.getByRole('region', { name: 'Leon’s final answer', exact: true })
+    const answers = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true })
     await expect(answers).toHaveCount(3)
     await expect(answers.nth(0)).toContainText('Legacy-only plan')
     await expect(answers.nth(1)).toContainText('Another widget result')
@@ -2612,8 +2612,8 @@ test('shows phase summaries from saved message metrics without a detailed trace'
   }
   await page.goto(SESSION_URL)
   await page.getByRole('button', { name: 'Worked for 12s', exact: true }).click()
-  await expect(page.getByRole('region', { name: 'Leon’s review' })).toHaveText('Reviewed for 2s')
-  await expect(page.getByRole('region', { name: 'Leon’s answer generation' })).toHaveText('Generated answer in 3s')
+  await expect(page.getByRole('region', { name: 'DataTalk’s review' })).toHaveText('Reviewed for 2s')
+  await expect(page.getByRole('region', { name: 'DataTalk’s answer generation' })).toHaveText('Generated answer in 3s')
 })
 
 for (const retryCount of [0, 1, 4]) {
@@ -2638,9 +2638,9 @@ for (const retryCount of [0, 1, 4]) {
       }
     }
     await page.goto(SESSION_URL)
-    const work = page.getByRole('region', { name: 'Leon’s completed work' })
+    const work = page.getByRole('region', { name: 'DataTalk’s completed work' })
     await work.getByRole('button', { name: 'Worked for 12s', exact: true }).click()
-    const retries = work.getByRole('region', { name: 'Leon’s retries' })
+    const retries = work.getByRole('region', { name: 'DataTalk’s retries' })
     if (retryCount === 0) {
       await expect(retries).toHaveCount(0)
     } else {
@@ -2678,8 +2678,8 @@ test('shows retries from the final live trace without refreshing history', async
   })
   await page.goto(SESSION_URL)
   await page.getByRole('button', { name: 'Worked for 12s', exact: true }).click()
-  await expect(page.getByRole('region', { name: 'Leon’s retries' }).locator('.activity-wave-content .process-group-title')).toHaveText('Retried 2 times')
-  await expect(page.getByRole('region', { name: 'Leon’s other processing' })).toHaveText('Other processing for 3s')
+  await expect(page.getByRole('region', { name: 'DataTalk’s retries' }).locator('.activity-wave-content .process-group-title')).toHaveText('Retried 2 times')
+  await expect(page.getByRole('region', { name: 'DataTalk’s other processing' })).toHaveText('Other processing for 3s')
   expect(ui.completedRequests.filter((url) => url.pathname.endsWith(SESSION_ID))).toHaveLength(1)
 })
 
@@ -2698,11 +2698,11 @@ test('accounts for tool selection and intermediate model requests alongside exec
     }
   }
   await page.goto(SESSION_URL)
-  const work = page.getByRole('region', { name: 'Leon’s completed work' })
+  const work = page.getByRole('region', { name: 'DataTalk’s completed work' })
   await work.getByRole('button', { name: 'Worked for 11s', exact: true }).click()
   await expect(work.getByRole('button', { name: 'Used 1 tool for 5s', exact: true })).toBeVisible()
   await work.getByRole('button', { name: 'Processed for 6s', exact: true }).click()
-  await expect(work.getByRole('region', { name: 'Leon’s inference', exact: true }).locator('.activity-wave-content .process-group-title')).toHaveText(['Processed tool request in 4s', 'Generated answer in 2s'])
+  await expect(work.getByRole('region', { name: 'DataTalk’s inference', exact: true }).locator('.activity-wave-content .process-group-title')).toHaveText(['Processed tool request in 4s', 'Generated answer in 2s'])
 })
 
 test('keeps thoughts separate and closes completed work with categorized model requests', async ({ page, ui }) => {
@@ -2729,18 +2729,18 @@ test('keeps thoughts separate and closes completed work with categorized model r
   }
 
   await page.goto(SESSION_URL)
-  const work = page.getByRole('region', { name: 'Leon’s completed work' })
+  const work = page.getByRole('region', { name: 'DataTalk’s completed work' })
   await work.getByRole('button', { name: 'Worked for 12s', exact: true }).click()
-  const processing = work.getByRole('region', { name: 'Leon’s processing', exact: true })
+  const processing = work.getByRole('region', { name: 'DataTalk’s processing', exact: true })
 
-  await expect(work.getByRole('region', { name: 'Leon’s thinking', exact: true })).toHaveCount(1)
+  await expect(work.getByRole('region', { name: 'DataTalk’s thinking', exact: true })).toHaveCount(1)
   await expect(work.locator('.leon-message-activities').first().locator(':scope > :last-child'))
-    .toHaveAttribute('aria-label', 'Leon’s processing')
+    .toHaveAttribute('aria-label', 'DataTalk’s processing')
   await processing.getByRole('button', { name: 'Processed for 9s', exact: true }).click()
-  await expect(processing.getByRole('region', { name: 'Leon’s thinking', exact: true })).toHaveCount(0)
+  await expect(processing.getByRole('region', { name: 'DataTalk’s thinking', exact: true })).toHaveCount(0)
 
   for (const category of categories) {
-    const request = processing.getByRole('region', { name: 'Leon’s inference', exact: true })
+    const request = processing.getByRole('region', { name: 'DataTalk’s inference', exact: true })
       .filter({ hasText: `${category.label} 1s` })
     await expect(request).toHaveCount(1)
     await expect(request.locator(`[data-icon="${resolveIconName(category.icon)}"]`)).toHaveCount(1)
@@ -2755,9 +2755,9 @@ for (const otherDuration of [undefined, 0, 500, 3_000]) {
       ...(otherDuration === undefined ? {} : { otherProcessingDurationMs: otherDuration })
     }
     await page.goto(SESSION_URL)
-    const work = page.getByRole('region', { name: 'Leon’s completed work' })
+    const work = page.getByRole('region', { name: 'DataTalk’s completed work' })
     await work.getByRole('button', { name: 'Worked for 12s', exact: true }).click()
-    const other = work.getByRole('region', { name: 'Leon’s other processing' })
+    const other = work.getByRole('region', { name: 'DataTalk’s other processing' })
     if (otherDuration === 3_000) {
       await expect(other).toHaveText('Other processing for 3s')
       await expect(other.locator('[data-icon="more"]')).toHaveCount(1)

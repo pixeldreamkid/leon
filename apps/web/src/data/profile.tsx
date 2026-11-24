@@ -76,11 +76,11 @@ function ProfileSignIn() {
   })
 
   return (
-    <form aria-label="Connect to Leon" onSubmit={(event) => {
+    <form aria-label="Connect to DataTalk" onSubmit={(event) => {
       event.preventDefault()
       login.mutate()
     }}>
-      <h1>Connect to your Leon profile</h1>
+      <h1>Connect to your DataTalk profile</h1>
       <Input
         ariaLabel="Profile token"
         placeholder="Profile token"

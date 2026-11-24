@@ -27,8 +27,8 @@ for (const [theme, reducedMotion] of [['dark', 'no-preference'], ['light', 'redu
     if (theme === 'light') {
       await page.getByRole('button', { name: 'Apply light theme', exact: true }).click()
     }
-    const body = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
-    const open = body.getByRole('button', { name: `Open ${PATH} on Leon’s host`, exact: true })
+    const body = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
+    const open = body.getByRole('button', { name: `Open ${PATH} on DataTalk’s host`, exact: true })
     const presentation = open.locator('.inline-link')
     const reference = body.getByRole('link', { name: 'Reference', exact: true })
     await expect(open).toBeVisible()
@@ -57,9 +57,9 @@ for (const [theme, reducedMotion] of [['dark', 'no-preference'], ['light', 'redu
     const copy = body.getByRole('button', { name: 'Copy path', exact: true }).first()
     await expect(copy).toHaveCSS('font-size', typography.size)
     await expect(copy).toHaveCSS('line-height', typography.lineHeight)
-    await expect(body.getByRole('button', { name: `Open ${WINDOWS_PATH} on Leon’s host`, exact: true })).toBeVisible()
-    await expect(body.getByRole('button', { name: `Open ${MARKDOWN_PATH} on Leon’s host`, exact: true })).toBeVisible()
-    await expect(body.getByRole('button', { name: `Open ${OTHER_MARKDOWN_PATH} on Leon’s host`, exact: true })).toBeVisible()
+    await expect(body.getByRole('button', { name: `Open ${WINDOWS_PATH} on DataTalk’s host`, exact: true })).toBeVisible()
+    await expect(body.getByRole('button', { name: `Open ${MARKDOWN_PATH} on DataTalk’s host`, exact: true })).toBeVisible()
+    await expect(body.getByRole('button', { name: `Open ${OTHER_MARKDOWN_PATH} on DataTalk’s host`, exact: true })).toBeVisible()
     await expect(body.getByRole('button', { name: 'Copy path', exact: true })).toHaveCount(4)
     await expect(body.getByText('[FILE_PATH]/example/literal.txt[/FILE_PATH]', { exact: true })).toBeVisible()
     expect(requests).toEqual([])
@@ -67,7 +67,7 @@ for (const [theme, reducedMotion] of [['dark', 'no-preference'], ['light', 'redu
     await expect(presentation).toHaveCSS('color', typography.color)
     await presentation.evaluate((element) => Promise.all(element.getAnimations().map((animation) => animation.finished)))
     await expect(presentation).toHaveCSS('color', typography.color)
-    await expect(page.getByRole('tooltip').filter({ hasText: PATH })).toContainText('Open on Leon’s host')
+    await expect(page.getByRole('tooltip').filter({ hasText: PATH })).toContainText('Open on DataTalk’s host')
     await body.getByRole('button', { name: 'Copy path', exact: true }).first().click()
     await expect(page.locator('html')).toHaveAttribute('data-copied-path', PATH)
     expect(requests).toEqual([])
@@ -101,7 +101,7 @@ test('keeps streamed path fragments inert until their closing delimiter arrives'
   answer.message = ''
   answer.isAddedToHistory = false
   await page.reload()
-  const body = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const body = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
   await ui.emit([{ ...event, sequence: 1, type: 'text_stream', data: {
     kind: 'answer', generationId: 'paths', token: 'Here it is: [FILE_' } }])
   await expect(body).not.toContainText('[FILE_')
@@ -115,7 +115,7 @@ test('keeps streamed path fragments inert until their closing delimiter arrives'
   await expect(body.getByRole('button', { name: 'Copy path', exact: true })).toHaveCount(0)
   await ui.emit([{ ...event, sequence: 3, type: 'text_stream', data: {
     kind: 'answer', generationId: 'paths', token: 'LE_PATH]. Ready.' } }])
-  await expect(body.getByRole('button', { name: `Open ${PATH} on Leon’s host`, exact: true })).toBeVisible()
+  await expect(body.getByRole('button', { name: `Open ${PATH} on DataTalk’s host`, exact: true })).toBeVisible()
   await expect(body).toContainText('Ready.')
 })
 
@@ -129,7 +129,7 @@ test('reports a rejected host open once without automatically replaying it', asy
     pending.resolve(route)
   })
   await page.goto(SESSION_URL)
-  const open = page.getByRole('button', { name: `Open ${PATH} on Leon’s host`, exact: true })
+  const open = page.getByRole('button', { name: `Open ${PATH} on DataTalk’s host`, exact: true })
   await open.click()
   const route = await pending.promise
   await expect(open).toBeDisabled()

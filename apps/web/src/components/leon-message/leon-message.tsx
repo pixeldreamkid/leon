@@ -104,7 +104,7 @@ function ExecutionActivity({ activity }: ExecutionActivityProps) {
         <ProcessGroup
           active={planIsActive}
           activeLabel="Executing plan..."
-          ariaLabel="Leon’s execution plan"
+          ariaLabel="DataTalk’s execution plan"
           className="activity-timeline-parent"
           completedLabel={(activity.complete ?? activity.steps.every((step) => step.status === 'completed'))
             ? `Completed plan${planDuration ? ` for ${planDuration}` : ''}` : 'Execution plan'}
@@ -134,7 +134,7 @@ function ExecutionActivity({ activity }: ExecutionActivityProps) {
         active={toolsAreActive}
         animateWhileActive={!hasVisibleToolCalls}
         activeLabel={toolsAreRunning ? 'Using tools...' : 'Preparing tool calls...'}
-        ariaLabel="Leon’s tool usage"
+        ariaLabel="DataTalk’s tool usage"
         className="activity-timeline-parent"
         completedLabel={`Used ${toolCount} ${
           toolCount === 1 ? 'tool' : 'tools'
@@ -188,7 +188,7 @@ function renderActivity(activity: LeonFeedActivity) {
           key={activity.id}
           phaseId={activity.id}
           label={currentRequest.activeLabel ?? 'Processing...'}
-          {...(currentRequest.isRuntime ? { ariaLabel: 'Leon’s tool preparation' } : {})}
+          {...(currentRequest.isRuntime ? { ariaLabel: 'DataTalk’s tool preparation' } : {})}
           {...(currentRequest.isGeneric ? {} : { iconName: currentRequest.iconName })}
           startedAt={currentRequest.startedAt}
         />
@@ -202,7 +202,7 @@ function renderActivity(activity: LeonFeedActivity) {
           key={activity.id}
           active={false}
           activeLabel="Processing..."
-          ariaLabel={request.isRuntime ? 'Leon’s tool preparation' : 'Leon’s inference'}
+          ariaLabel={request.isRuntime ? 'DataTalk’s tool preparation' : 'DataTalk’s inference'}
           completedLabel={`${request.label} ${formatToolDuration(request.durationMs, DurationFormat.Precise)}`}
           indicator={<Icon name={`${request.iconName}`} />}
           startedAt={request.startedAt}
@@ -215,7 +215,7 @@ function renderActivity(activity: LeonFeedActivity) {
         key={activity.id}
         active={false}
         activeLabel="Processing..."
-        ariaLabel="Leon’s processing"
+        ariaLabel="DataTalk’s processing"
         className="activity-timeline-parent"
         completedLabel={`Processed for ${formatToolDuration(activity.durationMs, DurationFormat.Compact)}`}
         indicator={<Icon name="cpu-line" />}
@@ -227,7 +227,7 @@ function renderActivity(activity: LeonFeedActivity) {
                 key={request.id}
                 active={false}
                 activeLabel="Processing..."
-                ariaLabel={request.isRuntime ? 'Leon’s tool preparation' : 'Leon’s inference'}
+                ariaLabel={request.isRuntime ? 'DataTalk’s tool preparation' : 'DataTalk’s inference'}
                 completedLabel={`${request.label} ${formatToolDuration(request.durationMs, DurationFormat.Precise)}`}
                 indicator={<Icon name={`${request.iconName}`} />}
                 startedAt={request.startedAt}
@@ -244,7 +244,7 @@ function renderActivity(activity: LeonFeedActivity) {
         key={activity.id}
         active={false}
         activeLabel="Processing..."
-        ariaLabel="Leon’s other processing"
+        ariaLabel="DataTalk’s other processing"
         completedLabel={`Other processing for ${formatToolDuration(activity.durationMs, DurationFormat.Compact)}`}
         indicator={<Icon name="more-line" />}
       />
@@ -257,7 +257,7 @@ function renderActivity(activity: LeonFeedActivity) {
         key={activity.id}
         active={false}
         activeLabel="Retrying..."
-        ariaLabel="Leon’s retries"
+        ariaLabel="DataTalk’s retries"
         startedAt={activity.startedAt}
         completedLabel={`Retried ${activity.count} ${activity.count === 1 ? 'time' : 'times'}`}
         indicator={<Icon name="refresh-line" />}
@@ -274,7 +274,7 @@ function renderActivity(activity: LeonFeedActivity) {
         key={activity.id}
         active={false}
         activeLabel={isReview ? 'Reviewing...' : 'Generating answer...'}
-        ariaLabel={isReview ? 'Leon’s review' : 'Leon’s answer generation'}
+        ariaLabel={isReview ? 'DataTalk’s review' : 'DataTalk’s answer generation'}
         startedAt={activity.startedAt}
         completedLabel={isReview ? `Reviewed for ${duration}` : `Generated answer in ${duration}`}
         indicator={<Icon name={isReview ? 'search-eye-line' : 'pencil-ai-line'} />}
@@ -305,7 +305,7 @@ function renderActivity(activity: LeonFeedActivity) {
           active={false}
           activeLabel={label}
           completedLabel={label}
-          ariaLabel="Leon’s activity"
+          ariaLabel="DataTalk’s activity"
           startedAt={activity.startedAt}
           indicator={<Icon name={`${activity.iconName}`} />}
         >
@@ -352,7 +352,7 @@ export const LeonMessage = memo(function LeonMessage({ entry }: LeonMessageProps
         <ProcessGroup
           active={false}
           activeLabel="Working..."
-          ariaLabel="Leon’s completed work"
+          ariaLabel="DataTalk’s completed work"
           className="leon-message-work"
           completedLabel={`Worked for ${duration}`}
         >

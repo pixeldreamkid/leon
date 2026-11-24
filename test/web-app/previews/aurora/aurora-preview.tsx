@@ -354,7 +354,7 @@ function App() {
 
   return <ToastProvider><VisualPreviewProvider><main className="aurora-gallery">
     <header className="aurora-gallery-header">
-      <div><p className="gallery-eyebrow">Leon’s visual language</p><h1>Aurora <span>2.0</span></h1>
+      <div><p className="gallery-eyebrow">DataTalk’s visual language</p><h1>Aurora <span>2.0</span></h1>
         <p className="gallery-intro">A little more than words. A quiet space to explore, choose and create.</p></div>
       <div className="aurora-actions">
         <AppButton iconName={theme === 'dark' ? 'sun' : 'moon'} tooltipMessage={`Apply ${theme === 'dark' ? 'light' : 'dark'} theme`}
@@ -392,7 +392,7 @@ function App() {
       </section>)}
       {results.length === 0 && <p role="status">Nothing here yet. Try another word.</p>}
     </div>}
-    <footer className="gallery-notice">Made for Leon’s pace. Native controls, local assets and shared design tokens.</footer>
+    <footer className="gallery-notice">Made for DataTalk’s pace. Native controls, local assets and shared design tokens.</footer>
   </main></VisualPreviewProvider></ToastProvider>
 }
 

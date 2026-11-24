@@ -81,7 +81,7 @@ test.beforeEach(async ({ page, ui }) => {
 
 test('keeps autofocus, refresh, navigation and browser focus restoration silent', async ({ page, context }) => {
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   expect(await countWaves(page)).toBe(0)
   await page.getByRole('link', { name: 'Test session 1', exact: true }).click()
@@ -102,7 +102,7 @@ test('keeps autofocus, refresh, navigation and browser focus restoration silent'
 
 test('plays on a blurred-to-focused pointer transition, not clicks while already focused', async ({ page }) => {
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   await composer.click()
   expect(await countWaves(page)).toBe(0)
@@ -119,11 +119,11 @@ test('plays on keyboard Tab focus but not programmatic focus', async ({ page }) 
   await page.goto(SESSION_URL)
   const attachment = page.getByRole('button', { name: 'Add files' })
   await attachment.focus()
-  await page.getByRole('textbox', { name: 'Message Leon' }).focus()
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).focus()
   expect(await countWaves(page)).toBe(0)
   await attachment.focus()
   await page.keyboard.press('Tab')
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   await expect.poll(() => countWaves(page)).toBe(1)
 })
 
@@ -131,14 +131,14 @@ test('respects reduced motion on deliberate focus', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.goto(SESSION_URL)
   await page.getByRole('button', { name: 'Add files' }).click()
-  await page.getByRole('textbox', { name: 'Message Leon' }).click()
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).click()
   expect(await countWaves(page)).toBe(0)
 })
 
 test('aligns search carets with placeholders, edited text and cleared values', async ({ page }) => {
   await page.goto(SESSION_URL)
   await page.evaluate(() => document.fonts.ready)
-  await expectCaretAtTextStart(page.getByRole('textbox', { name: 'Message Leon' }))
+  await expectCaretAtTextStart(page.getByRole('textbox', { name: 'Message DataTalk' }))
 
   await page.getByRole('button', { name: /^Choose model, current:/ }).click()
   const modelSearch = page.getByRole('combobox', { name: 'Search models', exact: true })
@@ -182,7 +182,7 @@ test('keeps composer action alignment independent of text font metrics', async (
 
 test('recalls only from empty input and keeps normal caret navigation after editing', async ({ page, ui }) => {
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   const requests = (): number => ui.requests.filter((url) => url.pathname.endsWith('/queries')).length
   expect(requests()).toBe(0)
@@ -218,7 +218,7 @@ test('recalls 128 queries lazily without changing the feed or fetching beyond th
     sentAt: index, isAddedToHistory: true
   })))
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   const feedRequests = ui.historyRequests.length
   for (let index = 132; index >= 5; index--) {
@@ -238,7 +238,7 @@ test('recalls newly submitted queries after refresh and isolates navigation betw
     who: 'owner', messageId: 'other-query', message: 'Other session query', sentAt: 1, isAddedToHistory: true
   })
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.press('ArrowUp')
   await expect(composer).toHaveValue('Saved question 239')
   await composer.fill('My latest query')
@@ -275,7 +275,7 @@ test('does not overwrite drafts or another session when a history request finish
   })
   try {
     await page.goto(SESSION_URL)
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     await composer.press('ArrowUp')
     await expect.poll(() => started).toBe(true)
     await composer.fill('Do not replace this draft')
@@ -309,7 +309,7 @@ test('does not overwrite drafts or another session when a history request finish
 test('reports failed history reads in a toast and allows another recall attempt', async ({ page, ui }) => {
   ui.failure = { path: `/api/v1/sessions/${SESSION_ID}/queries`, status: 400, message: 'Query history is unavailable.' }
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.press('ArrowUp')
   await expect(page.getByText('Could not load query history', { exact: true })).toBeVisible()
   await expect(composer).toHaveValue('')
@@ -326,7 +326,7 @@ test('bounds long-query text without truncating recalled input', async ({ page, 
     sentAt: index, isAddedToHistory: true
   })))
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   for (let index = 99; index >= 89; index--) {
     await composer.press('ArrowUp')
     await expect(composer).toHaveValue(`${message}${index}`)
@@ -392,7 +392,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     await page.emulateMedia({ reducedMotion })
     await page.goto(SESSION_URL)
     await expect(page.getByText(LATEST_ANSWER, { exact: true })).toBeVisible()
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     await composer.fill('Keep drafting after scrolling')
     const main = page.locator('.app-main')
     const scrollButton = page.getByRole('button', { name: 'Scroll to bottom' })
@@ -436,7 +436,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
 
 test('plays one entrance wave on each new-session landing, including refresh', async ({ page }) => {
   await page.goto('./')
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(composer).toBeFocused()
   await expect.poll(() => countWaves(page)).toBe(1)
   await expect(page.locator('.query-input-focus-wave')).toHaveCount(0)
@@ -463,9 +463,9 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
     const answer = ui.history.get(SESSION_ID)!.at(-1)!
     answer.message = 'A line of the answer.\n'.repeat(80) + 'The final line stays reachable.'
     await page.goto(SESSION_URL)
-    const composer = page.getByRole('textbox', { name: 'Message Leon' })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
     await composer.fill('A line of the draft.\n'.repeat(40))
-    const form = page.getByRole('form', { name: 'Send a message to Leon' })
+    const form = page.getByRole('form', { name: 'Send a message to DataTalk' })
     await expect(form).toHaveClass(/query-input-expanded/)
     await expect(page.locator('.query-input-field')).toHaveClass(/query-input-field-scrollable/)
     await expect.poll(async () => (await form.boundingBox())!.height).toBeLessThan(720 / 2)
@@ -475,7 +475,7 @@ for (const reducedMotion of ['no-preference', 'reduce'] as const) {
       return Math.abs(glow!.y - bounds!.y)
     }).toBeLessThanOrEqual(1)
     const main = page.locator('.app-main')
-    const lastAnswer = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+    const lastAnswer = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
     const expectReachable = async (): Promise<void> => {
       await main.evaluate((element) => element.scrollTo({ top: element.scrollHeight }))
       await expect.poll(async () => {
@@ -530,7 +530,7 @@ test('lets a wheel gesture interrupt the fast return without pulling the owner b
   const remaining = await main.evaluate((element) => element.scrollHeight - element.clientHeight - element.scrollTop)
   expect(remaining).toBeGreaterThan(64)
   await expect(scrollButton).toBeVisible()
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
 })
 
 test('retargets the fast return when streamed content grows before landing', async ({ page, ui }) => {
@@ -560,7 +560,7 @@ test('retargets the fast return when streamed content grows before landing', asy
   const timing = await page.evaluate(async () => await Reflect.get(window, 'scrollTiming')) as ScrollTiming
   expect(timing.landed).toBe(true)
   expect(timing.durationMs).toBeLessThan(320)
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
 })
 
 for (const reducedMotion of ['no-preference', 'reduce'] as const) {

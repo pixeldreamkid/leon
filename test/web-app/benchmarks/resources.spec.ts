@@ -78,7 +78,7 @@ for (const workload of ['idle', 'draft', 'working', 'tasks', 'rain', 'reduced mo
     })
     await page.goto(SESSION_URL)
     await page.bringToFront()
-    const field = page.getByRole('textbox', { name: 'Message Leon' })
+    const field = page.getByRole('textbox', { name: 'Message DataTalk' })
 
     await expect(field).toBeFocused()
     if (workload === 'draft') {

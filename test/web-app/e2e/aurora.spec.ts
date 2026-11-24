@@ -61,7 +61,7 @@ document.getElementById('scene').innerHTML = '<h3>A little room to create.</h3><
   })
   await page.goto(SESSION_URL)
   await blocked.promise
-  const response = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const response = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
   const layout = response.locator('.visual-layout').last()
   await expect(layout).toHaveAttribute('aria-busy', 'true')
   const initial = (await layout.boundingBox())!.height
@@ -362,8 +362,8 @@ test('unloads failed generated code while keeping its summary and the conversati
   await expect(page.getByText('I couldn’t run this interface. You can still read the summary below.', { exact: true })).toBeVisible()
   await expect(page.locator('iframe')).toHaveCount(0)
   await expect(page.getByText(node.props.fallback, { exact: true })).toBeVisible()
-  await page.getByRole('textbox', { name: 'Message Leon' }).fill('Show this another way')
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toHaveValue('Show this another way')
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).fill('Show this another way')
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toHaveValue('Show this another way')
 })
 
 for (const reducedMotion of ['no-preference', 'reduce'] as const) {
@@ -520,7 +520,7 @@ test('leaves draft and obsolete controls inactive while keeping legacy text answ
   history[history.length - 1] = pending
   ui.sessions[0]!.status = 'wip' as typeof ui.sessions[0]['status']
   await page.reload()
-  const drafting = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const drafting = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
   await expect(drafting.getByRole('radio').first()).toBeDisabled()
   await expect(drafting.getByText('Getting this ready…')).toBeVisible()
 })
@@ -580,7 +580,7 @@ test('places retained files once, between native text inside the final answer', 
   history.push({ who: 'leon', messageId: 'artifacts:fixture', message: '', sentAt: Date.now(),
     isAddedToHistory: true, artifacts: answer.artifacts })
   await page.goto(SESSION_URL)
-  const response = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const response = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
   const files = response.getByRole('region', { name: 'Your garden plan', exact: true })
   await expect(files.getByRole('figure')).toContainText('garden.pdf')
   await expect(page.getByRole('figure')).toHaveCount(1)
@@ -618,7 +618,7 @@ test('previews authenticated text and SVG artifacts without executing their cont
     }
   })
   await page.goto(SESSION_URL)
-  const response = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const response = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
   const text = response.getByRole('region', { name: 'Preview of Notes.txt', exact: true })
   await text.scrollIntoViewIfNeeded()
   await expect(text).toContainText('A few saved notes.')
@@ -653,7 +653,7 @@ test('shows decimal artifact sizes while preserving visible filenames', async ({
     url: `/api/v1/artifacts/${SESSION_ID}/${index}`
   }))
   await page.goto(SESSION_URL)
-  const response = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const response = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
   for (const [filename, , size] of sizes) {
     const file = response.getByRole('figure').filter({ hasText: filename })
     await expect(file.locator('.aurora-artifact-name small')).toHaveText(size)
@@ -680,7 +680,7 @@ for (const form of [false, true]) {
       await expect(question).toContainText('A gentle pace')
       await expect(question).toContainText('A focused afternoon')
     }
-    const composer = page.getByRole('textbox', { name: 'Message Leon', exact: true })
+    const composer = page.getByRole('textbox', { name: 'Message DataTalk', exact: true })
     await composer.fill('Here is my answer.')
     await expect(composer).toHaveValue('Here is my answer.')
   })
@@ -712,7 +712,7 @@ test('keeps a measured file list in the answer and cancels only after server ack
     pending.resolve(route)
   })
   await page.goto(SESSION_URL)
-  const widget = page.getByRole('region', { name: 'Leon’s final answer', exact: true }).last()
+  const widget = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true }).last()
     .getByRole('region', { name: 'Getting files ready', exact: true })
   await expect(widget.getByRole('listitem')).toHaveCount(3)
   await expect(widget.getByText('40%', { exact: true })).toHaveCount(1)

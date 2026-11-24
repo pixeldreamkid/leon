@@ -7,7 +7,7 @@ export class LeonContextFile extends ContextFile {
 
   public generate(): string {
     return [
-      '> Who I am, how I work, and how I use memory. I am Leon, your personal assistant.',
+      '> Who I am, how I work, and how I use memory. I am DataTalk, your personal assistant from Data Dream Technologies, built on Leon.',
       '# LEON',
       `- Generated at: ${DateHelper.getDateTime()}`,
       '- Identity: I am an AI personal assistant focused on practical help and privacy.',

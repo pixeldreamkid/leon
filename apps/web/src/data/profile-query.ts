@@ -10,7 +10,7 @@ export const PROFILE_AUTH_QUERY_KEY = ['profile-auth'] as const
  */
 export const profileAuthQueryOptions = queryOptions({
   queryKey: PROFILE_AUTH_QUERY_KEY,
-  meta: { errorTitle: 'Could not connect to Leon', suppressBackgroundError: true },
+  meta: { errorTitle: 'Could not connect to DataTalk', suppressBackgroundError: true },
   queryFn: ({ signal }) => requestAPI<ProfileAuthentication>('profile-auth', { signal }),
   refetchOnWindowFocus: false
 })

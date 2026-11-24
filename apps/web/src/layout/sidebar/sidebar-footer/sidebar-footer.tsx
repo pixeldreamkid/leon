@@ -7,7 +7,8 @@ import { useAmbientConditions } from '@/data/ambient-conditions'
 
 import './sidebar-footer.sass'
 
-const DISCORD_URL = 'https://discord.gg/MNQqqKg'
+// DataTalk is built on the open-source Leon project; keep this credit visible.
+const LEON_PROJECT_URL = 'https://github.com/leon-ai/leon'
 const LEON_VERSION = '2.0.0-alpha.1+dev'
 
 export type Mood = 'sad' | 'cocky' | 'tired' | 'angry' | 'happy'
@@ -44,13 +45,13 @@ export function SidebarFooter({
     <footer className="sidebar-footer sidebar-footer-slot">
       <a
         className="sidebar-footer-link"
-        href={DISCORD_URL}
+        href={LEON_PROJECT_URL}
         target="_blank"
         rel="noreferrer"
       >
-        <Icon name="discord-line" className="sidebar-footer-link-icon" />
+        <Icon name="github-line" className="sidebar-footer-link-icon" />
         <span className="sidebar-footer-link-label">
-          Join us on Discord
+          Built on Leon
         </span>
       </a>
       <div className="sidebar-footer-status">

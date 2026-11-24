@@ -487,7 +487,7 @@ export function QueryInput({
             'query-input-expanded': isExpanded,
             'query-input-restoring': settledRestoration !== draftRestoration
           })}
-          aria-label="Send a message to Leon"
+          aria-label="Send a message to DataTalk"
           style={formHeight === undefined ? undefined : {
             height: `${formHeight}px`
           }}
@@ -516,7 +516,7 @@ export function QueryInput({
             />
           </div>
           <Input
-            ariaLabel="Message Leon"
+            ariaLabel="Message DataTalk"
             className={clsx('query-input-field', {
               'query-input-field-scrollable': isScrollable
             })}

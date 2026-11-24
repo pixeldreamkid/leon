@@ -229,7 +229,7 @@ for (const [theme, reducedMotion] of [['light', 'reduce'], ['dark', 'no-preferen
     await expect(link.locator('img')).toHaveAttribute('data-loaded', 'true')
     await link.hover()
     await expect(page.locator('.tooltip-content-open')).toHaveText('https://getleon.ai/')
-    await rendered('links').getByRole('button', { name: /Open .* on Leon’s host/ }).click()
+    await rendered('links').getByRole('button', { name: /Open .* on DataTalk’s host/ }).click()
     await expect(page.getByText('Host files cannot be opened here. You can still copy the path.', { exact: true })).toBeVisible()
     await page.getByRole('button', { name: 'Close notification', exact: true }).click()
     const details = rendered('details').locator('details')

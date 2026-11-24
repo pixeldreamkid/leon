@@ -28,7 +28,7 @@ async function canvasPaints(canvas: Locator): Promise<number> {
 test('keeps composer particles and the focused caret continuous without changing native editing', async ({ page, ui }) => {
   void ui
   await page.goto(SESSION_URL)
-  const field = page.getByRole('textbox', { name: 'Message Leon', exact: true })
+  const field = page.getByRole('textbox', { name: 'Message DataTalk', exact: true })
   const surface = page.locator('.query-input-container')
   const caret = surface.locator('.input-effects-caret')
   await expect(field).toBeFocused()
@@ -78,8 +78,8 @@ test('keeps visible working sessions animated across reading pauses and navigati
   await page.goto(SESSION_URL)
   const current = page.locator(`[data-session-id="${SESSION_ID}"]`)
   const other = page.locator(`[data-session-id="${OTHER_SESSION_ID}"]`)
-  await expect(current).toHaveAccessibleName('Test session 0, Leon is working')
-  await expect(other).toHaveAccessibleName('Test session 1, Leon is working')
+  await expect(current).toHaveAccessibleName('Test session 0, DataTalk is working')
+  await expect(other).toHaveAccessibleName('Test session 1, DataTalk is working')
   await expect(current.locator('.session-work-indicator')).not.toHaveClass(/session-work-paused/)
   await expect(other.locator('.session-work-indicator')).not.toHaveClass(/session-work-paused/)
   await expect.poll(() => canvasPaints(current.locator('canvas'))).toBeGreaterThan(0)
@@ -114,7 +114,7 @@ test('keeps visible working sessions animated across reading pauses and navigati
   await expect.poll(() => canvasPaints(current.locator('canvas'))).toBeGreaterThan(pausedPaints)
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await expect(other.locator('.session-work-indicator')).toHaveClass(/session-work-paused/)
-  await expect(other).toHaveAccessibleName('Test session 1, Leon is working')
+  await expect(other).toHaveAccessibleName('Test session 1, DataTalk is working')
   const reducedPaints = await canvasPaints(other.locator('canvas'))
 
   await page.waitForTimeout(200)
@@ -167,7 +167,7 @@ test('budgets weather frames and suspends decoration outside the viewport or for
   await page.emulateMedia({ reducedMotion: 'reduce' })
   await page.waitForTimeout(150)
   const reduced = await paints()
-  await page.getByRole('textbox', { name: 'Message Leon' }).fill('Motion preference respected')
+  await page.getByRole('textbox', { name: 'Message DataTalk' }).fill('Motion preference respected')
   await page.waitForTimeout(300)
   expect(await paints()).toBe(reduced)
   await expect(page.locator('.query-input-container')).not.toHaveClass(/query-input-active/)

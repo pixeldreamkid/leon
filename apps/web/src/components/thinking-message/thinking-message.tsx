@@ -48,7 +48,7 @@ export function ThinkingMessage({
         startedAt={startedAt}
         activeLabel="Thinking..."
         animateWhileActive
-        ariaLabel="Leon’s thinking"
+        ariaLabel="DataTalk’s thinking"
         completedLabel={duration ? `Thought for ${duration}` : 'Thought'}
         indicator={<ThoughtIcon />}
         onExpandedChange={setDetailsOpen}

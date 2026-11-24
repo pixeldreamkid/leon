@@ -338,7 +338,7 @@ export const SessionListItem = memo(function SessionListItem({
           params={{ sessionId: id }}
           className="session-list-item-link"
           data-session-id={id}
-          aria-label={isWorking ? `${title}, Leon is working` : showUnread ? `${title}, Unread response` : title}
+          aria-label={isWorking ? `${title}, DataTalk is working` : showUnread ? `${title}, Unread response` : title}
           activeProps={{
             className: clsx('session-list-item-link', 'session-list-item-active')
           }}

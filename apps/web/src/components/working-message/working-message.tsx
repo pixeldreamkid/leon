@@ -21,7 +21,7 @@ export function WorkingMessage({ phaseId, label, iconName, startedAt, ariaLabel 
       startedAt={startedAt}
       animateWhileActive
       activeLabel={label ?? getActivityLabel(phaseId)}
-      ariaLabel={ariaLabel ?? (iconName ? 'Leon’s inference' : 'Leon’s work')}
+      ariaLabel={ariaLabel ?? (iconName ? 'DataTalk’s inference' : 'DataTalk’s work')}
       completedLabel="Worked"
       indicator={iconName ? <Icon name={`${iconName}`} /> : undefined}
     />

@@ -45,8 +45,8 @@ export function FilePath({ path, complete, animationId }: { path: string, comple
   }
 
   return <span className="file-path-reference">
-    <Tooltip message={`Open on Leon’s host\n${path}`} multiline position="top" className="inline-link-tooltip">
-      <button className="file-path-open" type="button" aria-label={`Open ${path} on Leon’s host`}
+    <Tooltip message={`Open on DataTalk’s host\n${path}`} multiline position="top" className="inline-link-tooltip">
+      <button className="file-path-open" type="button" aria-label={`Open ${path} on DataTalk’s host`}
         disabled={request.isPending} aria-busy={request.isPending} onClick={() => request.mutate()}>
         <span className="inline-link" aria-disabled={request.isPending || undefined}>
           <span className="inline-link-icon" aria-hidden="true">

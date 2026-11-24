@@ -84,7 +84,7 @@ export async function generateFyi(query: string, answer: string): Promise<Fyi | 
       'Use simple everyday words, short direct sentences, and one clear idea. Avoid jargon, idioms, metaphors, and extra detail. Keep a warm, adult tone.',
       isFact
         ? `Teach one related fact beyond the answer, starting with "${FYI_PREFIX}". Use supplied evidence or reliable established knowledge; invent nothing. Return text:null if uncertain or no useful fact fits.`
-        : 'I am Leon. Write a cozy first-person aside reflecting my supplied mood. Be clear and truthful, without guilt or claims of human needs.'
+        : 'I am DataTalk. Write a cozy first-person aside reflecting my supplied mood. Be clear and truthful, without guilt or claims of human needs.'
     ].join('\n'),
     prompt: JSON.stringify({
       answer: safeAnswer.slice(0,

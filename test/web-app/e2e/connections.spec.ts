@@ -281,7 +281,7 @@ for (const explicit of [false, true]) {
       await route.fulfill({ json: { view: connectionPreviewView(preview, 'oauth', Step.Choice, true) } })
     })
     await page.goto(SESSION_URL)
-    const body = page.getByRole('region', { name: 'Leon’s final answer', exact: true })
+    const body = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true })
     await expect(body.getByRole('region', { name: 'Notion', exact: true })).toBeVisible()
     answer.message = 'Connect Notion below, then I can read the pages you share.'
     answer.isAddedToHistory = true
@@ -317,7 +317,7 @@ test('keeps late connection cards with their originating answer rather than the 
     await route.fulfill({ json: { view: connectionPreviewView(preview, 'oauth', Step.Choice, true) } })
   })
   await page.goto(SESSION_URL)
-  const answers = page.getByRole('region', { name: 'Leon’s final answer', exact: true })
+  const answers = page.getByRole('region', { name: 'DataTalk’s final answer', exact: true })
   await expect(answers.first()).toContainText('First answer.')
   await expect(answers.first().locator('.aurora-connection')).toHaveCount(1)
   await expect(answers.last().locator('.aurora-connection')).toHaveCount(0)

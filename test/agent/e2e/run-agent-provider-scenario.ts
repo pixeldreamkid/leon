@@ -357,7 +357,7 @@ async function main(): Promise<void> {
   const testHomePath = process.env['LEON_AGENT_SCENARIO_HOME']
   if (!testHomePath || path.dirname(path.resolve(testHomePath)) !== path.resolve(os.tmpdir()) ||
       !path.basename(testHomePath).startsWith(AGENT_SCENARIO_HOME_PREFIX)) {
-    throw new Error('Agent scenarios require an isolated temporary Leon home.')
+    throw new Error('Agent scenarios require an isolated temporary DataTalk home.')
   }
   const testProfilePath = path.join(
     testHomePath,

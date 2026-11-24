@@ -21,7 +21,7 @@ for (const { theme, reducedMotion, width } of [
     await expect(pageContent.locator('.not-found-page-logo')).toHaveCSS(
       'background-image', new RegExp(`logo-for-${theme === 'light' ? 'light' : 'dark'}-bg\\.svg`)
     )
-    await expect(page.getByRole('textbox', { name: 'Message Leon' })).toHaveCount(0)
+    await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toHaveCount(0)
     await expect(page.locator('.toast')).toHaveCount(0)
     expect(ui.historyRequests).toHaveLength(0)
     const composition = pageContent.locator('.not-found-page-content')
@@ -40,7 +40,7 @@ for (const { theme, reducedMotion, width } of [
     await home.focus()
     await home.press('Enter')
     await expect(page).toHaveURL(/\/web-app\/$/)
-    await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+    await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
     await expect(pageContent).toHaveCount(0)
   })
 }
@@ -49,7 +49,7 @@ test('renders the frame and editable composer during slow authentication without
   const releaseAuth = ui.holdAuthentication()
   const releaseHistory = ui.holdHistory()
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await expect(page.getByRole('navigation', { name: 'Main menu' })).toBeVisible()
   await expect(composer).toBeFocused()
   await composer.fill('Draft before authentication')
@@ -73,7 +73,7 @@ test('uses the hosted bootstrap without a separate authentication request', asyn
   ui.failure = { path: '/api/v1/profile-auth', status: 500, message: 'Unexpected auth probe.' }
   const response = await page.goto(SESSION_URL)
   expect(response?.headers()['cache-control']).toBe('private, no-store')
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   await expect(page.getByText(LATEST_ANSWER, { exact: true })).toBeVisible()
   expect(ui.requests.some((url) => url.pathname.endsWith('/profile-auth'))).toBe(false)
   await expect(page.locator('.toast')).toHaveCount(0)
@@ -83,20 +83,20 @@ test('uses signed-out bootstrap for login without fetching any private data', as
   await page.setExtraHTTPHeaders({ 'x-ui-bootstrap': 'signed-out' })
   ui.authenticated = false
   await page.goto('./')
-  await expect(page.getByRole('form', { name: 'Connect to Leon' })).toBeVisible()
+  await expect(page.getByRole('form', { name: 'Connect to DataTalk' })).toBeVisible()
   await expect(page.getByRole('navigation', { name: 'Main menu' })).toBeVisible()
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toHaveCount(0)
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toHaveCount(0)
   expect(ui.requests).toHaveLength(0)
   await page.getByLabel('Profile token').fill('fixture-token')
   await page.getByRole('button', { name: 'Connect', exact: true }).click()
-  await expect(page.getByRole('textbox', { name: 'Message Leon' })).toBeFocused()
+  await expect(page.getByRole('textbox', { name: 'Message DataTalk' })).toBeFocused()
   await expect(page.getByRole('link', { name: 'Test session 0', exact: true })).toBeVisible()
 })
 
 test('shows login for expired credentials without exposing session content', async ({ page, ui }) => {
   ui.authenticated = false
   await page.goto(SESSION_URL)
-  await expect(page.getByRole('form', { name: 'Connect to Leon' })).toBeVisible()
+  await expect(page.getByRole('form', { name: 'Connect to DataTalk' })).toBeVisible()
   expect(ui.requests.every((url) => url.pathname.endsWith('/profile-auth'))).toBe(true)
   await expect(page.getByText(LATEST_ANSWER, { exact: true })).toHaveCount(0)
 })
@@ -104,7 +104,7 @@ test('shows login for expired credentials without exposing session content', asy
 test('keeps startup drafts through an authentication error and explicit retry', async ({ page, ui }) => {
   ui.failure = { path: '/api/v1/profile-auth', status: 503, message: 'Auth temporarily unavailable.' }
   await page.goto(SESSION_URL)
-  const composer = page.getByRole('textbox', { name: 'Message Leon' })
+  const composer = page.getByRole('textbox', { name: 'Message DataTalk' })
   await composer.fill('Keep my startup draft')
   await expect(page.getByRole('button', { name: 'Retry connection' })).toBeVisible()
   ui.failure = undefined

@@ -44,7 +44,7 @@ export function FinalAnswer({
 }: FinalAnswerProps) {
   return (
     <div className="final-answer">
-      <section className="final-answer-body" aria-label="Leon’s final answer">
+      <section className="final-answer-body" aria-label="DataTalk’s final answer">
         {preparations?.map(({ id, preparation }) => <ToolPreparation key={id} preparation={preparation} />)}
         {parts?.length ? <AnswerParts parts={parts} artifacts={artifacts} animationId={animationId} active={active} fallbackText={children} /> : <>
         <MarkdownContent
